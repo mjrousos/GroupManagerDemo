@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-B2CDemo-4BBA97BD-7365-4E47-9FE9-387E5321CDAA</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<!-- These packages add general JWT auth functionality -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" NoWarn="NU1605" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.10" NoWarn="NU1605" />
+	  
+	<!-- These packages add AAD-specific helpers and UI -->
+    <PackageReference Include="Microsoft.Identity.Web" Version="1.17.0" />
+    <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.17.0" />
+  </ItemGroup>
+
+</Project>

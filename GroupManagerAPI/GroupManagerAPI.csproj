@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<UserSecretsId>d0408729-bed5-4d4d-ad87-073c5b5032f0</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+
+		<!-- These packages add general JWT auth functionality -->
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.10" NoWarn="NU1605" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.10" NoWarn="NU1605" />
+
+		<!-- These packages add AAD-specific helpers and UI -->
+		<PackageReference Include="Microsoft.Identity.Web" Version="1.17.0" />
+		<PackageReference Include="Microsoft.Identity.Web.UI" Version="1.17.0" />
+	</ItemGroup>
+</Project>

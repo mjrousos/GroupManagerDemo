@@ -1,19 +1,13 @@
-using Microsoft.AspNetCore.Authentication;
+using GroupManager.Models;
+using GroupManager.Services;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace B2CDemo
 {
@@ -29,8 +23,12 @@ namespace B2CDemo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var groupManagerApiOptions = Configuration.GetSection("GroupManagerApi").Get<GroupManagerApiOptions>();
+
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAdB2C"));
+                .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAdB2C"))
+                .EnableTokenAcquisitionToCallDownstreamApi(groupManagerApiOptions.Scopes)
+                .AddInMemoryTokenCaches();
 
             services.AddAuthorization(options =>
             {
@@ -43,6 +41,9 @@ namespace B2CDemo
             })
                 .AddMvcOptions(options => { })
                 .AddMicrosoftIdentityUI();
+
+            services.Configure<GroupManagerApiOptions>(Configuration.GetSection("GroupManagerApi"));
+            services.AddHttpClient<IGroupManagerApiClient, GroupManagerApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
